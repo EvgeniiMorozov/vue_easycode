@@ -1,47 +1,41 @@
 <template>
   <div id="app">
-    <ul>
-      <!--      <li v-for="(color, index) in colors" :key="index">
-      {{ index + 1 }} {{ color }}
-      </li>-->
-      <!--      <li v-for="user in users" :key="user.id">{{ user.name }} : {{ user.age }}</li>-->
-      <li v-for="(value, name, index) in product" :key="index">
-        {{ index + 1 }} {{ name }}: {{ value }}
-      </li>
-    </ul>
-    <div>
-      <!--      <input type="text" @keyup.enter="addNewColor" />-->
-      <input type="text" @keyup.enter="deleteProp" />
-    </div>
+    <h1>Hello {{ fullName }}</h1>
+    <input type="text" @keyup.enter="setName" />
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    colors: ['orange', 'yellow', 'black'],
-    users: [
-      { name: 'Denis', age: 30, id: '1' },
-      { name: 'Ivan', age: 25, id: '2' },
-    ],
-    product: {
-      brand: 'Apple',
-      model: 'IPhone 12',
-      price: '$1000',
-    },
+    firstName: '',
+    lastName: '',
   }),
   methods: {
-    addNewColor(e) {
-      // this.colors.push(e.target.value);
-      console.log(e.target.value);
-      // this.colors[this.colors.length] = e.target.value;
-      this.$set(this.colors, this.colors.length, e.target.value);
+    setName(e) {
+      // this.firstName = e.target.value;
+      this.fullName = e.target.value;
     },
-    deleteProp(e) {
-      console.log(e.target.value);
-      // delete this.product[e.target.value];
-      this.$delete(this.product, e.target.value);
+    onLastNameUpdate(value) {
+      console.log('watch', value);
     },
+  },
+  computed: {
+    fullName: {
+      get() {
+        return `${this.firstName || 'Default'} ${this.lastName || 'User'}`;
+      },
+      set(value) {
+        console.log(value);
+        const [firstName, lastName] = value.split(' ');
+        console.log(firstName, lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
+      },
+    },
+  },
+  watch: {
+    lastName: 'onLastNameUpdate',
   },
 };
 </script>
