@@ -1,27 +1,46 @@
 <template>
   <div id="app">
-    <button @click.right="onClick('some value', $event)">Click event</button>
-    <a href @click.prevent="onLinkClick">Link</a>
-    <h1>{{ text }}</h1>
-    <input type="text" @keyup.enter="onKeyUp" />
+    <ul>
+      <!--      <li v-for="(color, index) in colors" :key="index">
+      {{ index + 1 }} {{ color }}
+      </li>-->
+      <!--      <li v-for="user in users" :key="user.id">{{ user.name }} : {{ user.age }}</li>-->
+      <li v-for="(value, name, index) in product" :key="index">
+        {{ index + 1 }} {{ name }}: {{ value }}
+      </li>
+    </ul>
+    <div>
+      <!--      <input type="text" @keyup.enter="addNewColor" />-->
+      <input type="text" @keyup.enter="deleteProp" />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    text: '',
+    colors: ['orange', 'yellow', 'black'],
+    users: [
+      { name: 'Denis', age: 30, id: '1' },
+      { name: 'Ivan', age: 25, id: '2' },
+    ],
+    product: {
+      brand: 'Apple',
+      model: 'IPhone 12',
+      price: '$1000',
+    },
   }),
   methods: {
-    onClick(value, e) {
-      console.log(value, e);
+    addNewColor(e) {
+      // this.colors.push(e.target.value);
+      console.log(e.target.value);
+      // this.colors[this.colors.length] = e.target.value;
+      this.$set(this.colors, this.colors.length, e.target.value);
     },
-    onLinkClick() {
-      console.log('link click');
-    },
-    onKeyUp(e) {
-      console.log(e);
-      this.text = e.target.value;
+    deleteProp(e) {
+      console.log(e.target.value);
+      // delete this.product[e.target.value];
+      this.$delete(this.product, e.target.value);
     },
   },
 };
