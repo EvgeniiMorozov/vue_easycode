@@ -1,26 +1,54 @@
 <template>
   <div id="app">
-    <HelloWorld :user-object="user" :title="title" @onChangeCounter="onChangeCounterInComponent" />
+    <input type="text" v-model="textComputed" />
+    <h3>
+      Input text value:
+      <i>{{ text }}</i>
+    </h3>
+    <div class="checkboxes">
+      <input type="checkbox" v-model="checkbox" />
+      <h3>
+        Checkbox value:
+        <i>{{ checkbox }}</i>
+      </h3>
+      <input type="checkbox" v-model="checkboxArray" value="one" />
+      <input type="checkbox" v-model="checkboxArray" value="two" />
+      <input type="checkbox" v-model="checkboxArray" value="three" />
+      <h3>
+        CheckboxArray value:
+        <i>{{ checkboxArray }}</i>
+      </h3>
+    </div>
+    <select v-model="select">
+      <option value="bmw">BMW</option>
+      <option value="audi">Audi</option>
+    </select>
+    <h3>
+      Select value:
+      <i>{{ select }}</i>
+    </h3>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue';
-
 export default {
-  components: {
-    HelloWorld,
-  },
+  name: 'app',
   data: () => ({
-    title: 'Some title',
-    user: {
-      name: 'Vasya',
-      age: 30,
-    },
+    text: '',
+    checkbox: false,
+    checkboxArray: [],
+    select: '',
   }),
-  methods: {
-    onChangeCounterInComponent(value) {
-      console.log('In App.vue, counter:', value);
+  methods: {},
+  computed: {
+    textComputed: {
+      get() {
+        return this.text;
+      },
+      set(value) {
+        console.log(value);
+        this.text = value;
+      },
     },
   },
 };
