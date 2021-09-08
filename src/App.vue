@@ -1,24 +1,19 @@
 <template>
   <div id="app">
-    <h1 class="title" :class="[classObj, activeClass]" :style="{ 'font-size': fontSize + 'px' }">
-      Hello World
-    </h1>
+    <HelloWorld @onChangeCounter="onChangeCounterInComponent" />
   </div>
 </template>
 
 <script>
+import HelloWorld from '@/components/HelloWorld.vue';
+
 export default {
-  data: () => ({
-    activeClass: 'my-active-class',
-    isActive: false,
-    fontSize: 30,
-  }),
-  computed: {
-    classObj() {
-      return {
-        'active-class': this.isActive,
-        error: !this.isActive,
-      };
+  components: {
+    HelloWorld,
+  },
+  methods: {
+    onChangeCounterInComponent(value) {
+      console.log('In App.vue, counter:', value);
     },
   },
 };
