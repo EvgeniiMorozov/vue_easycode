@@ -1,41 +1,25 @@
 <template>
   <div id="app">
-    <h1>Hello {{ fullName }}</h1>
-    <input type="text" @keyup.enter="setName" />
+    <h1 class="title" :class="[classObj, activeClass]" :style="{ 'font-size': fontSize + 'px' }">
+      Hello World
+    </h1>
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    firstName: '',
-    lastName: '',
+    activeClass: 'my-active-class',
+    isActive: false,
+    fontSize: 30,
   }),
-  methods: {
-    setName(e) {
-      // this.firstName = e.target.value;
-      this.fullName = e.target.value;
-    },
-    onLastNameUpdate(value) {
-      console.log('watch', value);
-    },
-  },
   computed: {
-    fullName: {
-      get() {
-        return `${this.firstName || 'Default'} ${this.lastName || 'User'}`;
-      },
-      set(value) {
-        console.log(value);
-        const [firstName, lastName] = value.split(' ');
-        console.log(firstName, lastName);
-        this.firstName = firstName;
-        this.lastName = lastName;
-      },
+    classObj() {
+      return {
+        'active-class': this.isActive,
+        error: !this.isActive,
+      };
     },
-  },
-  watch: {
-    lastName: 'onLastNameUpdate',
   },
 };
 </script>
